@@ -1,7 +1,18 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import Product from "./Product";
+import Message from "../LoadingError/Error"
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../LoadingError/Loading";
+import { CourseList } from "../../Redux/Actions/CourseAction";
 const MainProducts = () => {
+  const dispatch = useDispatch();
+  // const {course}=useSelector(state=>state.coursList);
+  const {error,course:courseDelte} =useSelector(state=>state.courseDelte)
+  
+  useEffect(()=>{
+    dispatch(CourseList())
+  },[dispatch,courseDelte]);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -42,8 +53,11 @@ const MainProducts = () => {
         </header>
 
         <div className="card-body">
-          {/* {errorDelete && (
-            <Message variant="alert-danger">{errorDelete}</Message>
+          <div className="row">
+           <Product/>
+          {/* </div>
+          {error && (
+            <Message variant="alert-danger">{error}</Message>
           )}
           {loading ? (
             <Loading />
@@ -51,8 +65,8 @@ const MainProducts = () => {
             <Message variant="alert-danger">{error}</Message>
           ) : (
             <div className="row">
-              {products.map((product) => (
-                <Product product={product} key={product._id} />
+              {course.map((product) => (
+                <Product product={product} key={product.id} />
               ))}
             </div>
           )} */}
@@ -88,6 +102,8 @@ const MainProducts = () => {
           </nav>
         </div>
       </div>
+      </div>
+
     </section>
   );
 };
